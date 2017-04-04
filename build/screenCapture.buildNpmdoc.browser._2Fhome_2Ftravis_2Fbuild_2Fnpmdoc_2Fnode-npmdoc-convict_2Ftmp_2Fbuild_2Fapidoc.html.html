@@ -1,0 +1,166 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a href="https://github.com/mozilla/node-convict">convict (v3.0.0)</a>
+</h1>
+<h4>Unruly configuration management for Node.js</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.convict">module convict</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.convict.addFormat">
+            function <span class="apidocSignatureSpan">convict.</span>addFormat
+            <span class="apidocSignatureSpan">(name, validate, coerce)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.convict.addFormats">
+            function <span class="apidocSignatureSpan">convict.</span>addFormats
+            <span class="apidocSignatureSpan">(formats)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.convict" id="apidoc.module.convict">module convict</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.convict.addFormat" id="apidoc.element.convict.addFormat">
+        function <span class="apidocSignatureSpan">convict.</span>addFormat
+        <span class="apidocSignatureSpan">(name, validate, coerce)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">addFormat = function (name, validate, coerce) {
+  if (typeof name === 'object') {
+    validate = name.validate;
+    coerce = name.coerce;
+    name = name.name;
+  }
+  if (typeof validate !== 'function') {
+    throw new Error('Validation function for ' + name + ' must be a function.');
+  }
+  if (coerce &amp;&amp; typeof coerce !== 'function') {
+    throw new Error('Coerce function for ' + name + ' must be a function.');
+  }
+  types[name] = validate;
+  if (coerce) converters[name] = coerce;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    }
+  },
+  default: '3cec609c9bc601c047af917a544645c50caf8cd606806b4e0a23312441014deb'
+}
+});
+```
+
+Or, you can use `convict.<span class="apidocCodeKeywordSpan">addFormat</span>()` to register a custom format checking
+method that can be reused for many different properties:
+
+```javascript
+convict.addFormat({
+name: 'float-percent',
+validate: function(val) {
+  if (val !== 0 &amp;&amp; (!val || val &gt; 1 || val &lt; 0)) {
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.convict.addFormats" id="apidoc.element.convict.addFormats">
+        function <span class="apidocSignatureSpan">convict.</span>addFormats
+        <span class="apidocSignatureSpan">(formats)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">addFormats = function (formats) {
+  Object.keys(formats).forEach(function(type) {
+    convict.addFormat(type, formats[type].validate, formats[type].coerce);
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+convict configuration object. The configuration object has an API for getting
+and setting values, described below.
+
+### config.addFormat(format)
+
+Adds a new custom format.
+
+### config.<span class="apidocCodeKeywordSpan">addFormats</span>(format1, format2, ...)
+
+Adds new custom formats.
+
+### config.get(name)
+
+Returns the current value of the `name` property. `name` can use dot notation to reference nested values. E.g.:
+```javascript
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
