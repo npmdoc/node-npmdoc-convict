@@ -1,9 +1,14 @@
-# api documentation for  [convict (v3.0.0)](https://github.com/mozilla/node-convict)  [![npm package](https://img.shields.io/npm/v/npmdoc-convict.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-convict) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-convict.svg)](https://travis-ci.org/npmdoc/node-npmdoc-convict)
+# npmdoc-convict
+
+#### api documentation for  [convict (v3.0.0)](https://github.com/mozilla/node-convict)  [![npm package](https://img.shields.io/npm/v/npmdoc-convict.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-convict) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-convict.svg)](https://travis-ci.org/npmdoc/node-npmdoc-convict)
+
 #### Unruly configuration management for Node.js
 
-[![NPM](https://nodei.co/npm/convict.png?downloads=true)](https://www.npmjs.com/package/convict)
+[![NPM](https://nodei.co/npm/convict.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/convict)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-convict/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-convict_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-convict/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-convict/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-convict/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-convict/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-convict/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-convict/build/screenCapture.npmPackageListing.svg)
 
@@ -18,7 +23,6 @@
 {
     "author": {
         "name": "Lloyd Hilaiel",
-        "email": "lloyd@hilaiel.com",
         "url": "http://lloyd.io"
     },
     "browserify": {
@@ -74,47 +78,37 @@
     "main": "lib/convict.js",
     "maintainers": [
         {
-            "name": "6a68",
-            "email": "ohai@6a68.net"
+            "name": "6a68"
         },
         {
-            "name": "fmarier",
-            "email": "francois@fmarier.org"
+            "name": "fmarier"
         },
         {
-            "name": "lloyd",
-            "email": "lloyd@hilaiel.com"
+            "name": "lloyd"
         },
         {
-            "name": "ozten",
-            "email": "shout@ozten.com"
+            "name": "ozten"
         },
         {
-            "name": "rfkelly",
-            "email": "rfkelly@mozilla.com"
+            "name": "rfkelly"
         },
         {
-            "name": "seanmonstar",
-            "email": "sean.monstar@gmail.com"
+            "name": "seanmonstar"
         },
         {
-            "name": "stomlinson",
-            "email": "shane@shanetomlinson.com"
+            "name": "stomlinson"
         },
         {
-            "name": "vladikoff",
-            "email": "vlad@vladikoff.com"
+            "name": "vladikoff"
         },
         {
-            "name": "zaach",
-            "email": "zack.carter@gmail.com"
+            "name": "zaach"
         }
     ],
     "name": "convict",
     "optionalDependencies": {
         "varify": "0.2.0"
     },
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/mozilla/node-convict.git"
@@ -135,88 +129,6 @@
     },
     "version": "3.0.0"
 }
-```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module convict](#apidoc.module.convict)
-1.  [function <span class="apidocSignatureSpan">convict.</span>addFormat (name, validate, coerce)](#apidoc.element.convict.addFormat)
-1.  [function <span class="apidocSignatureSpan">convict.</span>addFormats (formats)](#apidoc.element.convict.addFormats)
-
-
-
-# <a name="apidoc.module.convict"></a>[module convict](#apidoc.module.convict)
-
-#### <a name="apidoc.element.convict.addFormat"></a>[function <span class="apidocSignatureSpan">convict.</span>addFormat (name, validate, coerce)](#apidoc.element.convict.addFormat)
-- description and source-code
-```javascript
-addFormat = function (name, validate, coerce) {
-  if (typeof name === 'object') {
-    validate = name.validate;
-    coerce = name.coerce;
-    name = name.name;
-  }
-  if (typeof validate !== 'function') {
-    throw new Error('Validation function for ' + name + ' must be a function.');
-  }
-  if (coerce && typeof coerce !== 'function') {
-    throw new Error('Coerce function for ' + name + ' must be a function.');
-  }
-  types[name] = validate;
-  if (coerce) converters[name] = coerce;
-}
-```
-- example usage
-```shell
-...
-    }
-  },
-  default: '3cec609c9bc601c047af917a544645c50caf8cd606806b4e0a23312441014deb'
-}
-});
-'''
-
-Or, you can use 'convict.addFormat()' to register a custom format checking
-method that can be reused for many different properties:
-
-'''javascript
-convict.addFormat({
-name: 'float-percent',
-validate: function(val) {
-  if (val !== 0 && (!val || val > 1 || val < 0)) {
-...
-```
-
-#### <a name="apidoc.element.convict.addFormats"></a>[function <span class="apidocSignatureSpan">convict.</span>addFormats (formats)](#apidoc.element.convict.addFormats)
-- description and source-code
-```javascript
-addFormats = function (formats) {
-  Object.keys(formats).forEach(function(type) {
-    convict.addFormat(type, formats[type].validate, formats[type].coerce);
-  });
-}
-```
-- example usage
-```shell
-...
-convict configuration object. The configuration object has an API for getting
-and setting values, described below.
-
-### config.addFormat(format)
-
-Adds a new custom format.
-
-### config.addFormats(format1, format2, ...)
-
-Adds new custom formats.
-
-### config.get(name)
-
-Returns the current value of the 'name' property. 'name' can use dot notation to reference nested values. E.g.:
-'''javascript
-...
 ```
 
 
