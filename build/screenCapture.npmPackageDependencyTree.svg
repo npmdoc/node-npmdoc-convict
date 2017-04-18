@@ -1,16 +1,19 @@
-<svg height="206" width="720" xmlns="http://www.w3.org/2000/svg">
-<rect height="206" fill="#555" width="720"></rect>
+<svg height="254" width="720" xmlns="http://www.w3.org/2000/svg">
+<rect height="254" fill="#555" width="720"></rect>
 <text fill="#7f7" font-family="Courier New" font-size="12" xml:space="preserve">
-<tspan x="10" y="26">└─┬ convict@3.0.0 </tspan>
-<tspan x="10" y="42">  ├── depd@1.1.0 </tspan>
-<tspan x="10" y="58">  ├── json5@0.5.1 </tspan>
-<tspan x="10" y="74">  ├── lodash.clonedeep@4.5.0 </tspan>
-<tspan x="10" y="90">  ├── minimist@1.2.0 </tspan>
-<tspan x="10" y="106">  ├── moment@2.17.1 </tspan>
-<tspan x="10" y="122">  ├── validator@7.0.0 </tspan>
-<tspan x="10" y="138">  └─┬ varify@0.2.0 </tspan>
-<tspan x="10" y="154">    ├─┬ redeyed@1.0.1 </tspan>
-<tspan x="10" y="170">    │ └── esprima@3.0.0 </tspan>
-<tspan x="10" y="186">    └── through@2.3.8</tspan>
+<tspan x="10" y="26">5 megabytes installed</tspan>
+<tspan x="10" y="42"></tspan>
+<tspan x="10" y="58">node_modules</tspan>
+<tspan x="10" y="74">└─┬ convict@3.0.0 </tspan>
+<tspan x="10" y="90">  ├── depd@1.1.0 </tspan>
+<tspan x="10" y="106">  ├── json5@0.5.1 </tspan>
+<tspan x="10" y="122">  ├── lodash.clonedeep@4.5.0 </tspan>
+<tspan x="10" y="138">  ├── minimist@1.2.0 </tspan>
+<tspan x="10" y="154">  ├── moment@2.17.1 </tspan>
+<tspan x="10" y="170">  ├── validator@7.0.0 </tspan>
+<tspan x="10" y="186">  └─┬ varify@0.2.0 </tspan>
+<tspan x="10" y="202">    ├─┬ redeyed@1.0.1 </tspan>
+<tspan x="10" y="218">    │ └── esprima@3.0.0 </tspan>
+<tspan x="10" y="234">    └── through@2.3.8</tspan>
 </text>
 </svg>

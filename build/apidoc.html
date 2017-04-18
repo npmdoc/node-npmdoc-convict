@@ -63,6 +63,15 @@
 
         <li>
 
+            <a class="apidocElementLiA" href="#apidoc.element.convict.convict">
+            function <span class="apidocSignatureSpan"></span>convict
+            <span class="apidocSignatureSpan">(def)</span>
+            </a>
+
+        </li>
+
+        <li>
+
             <a class="apidocElementLiA" href="#apidoc.element.convict.addFormat">
             function <span class="apidocSignatureSpan">convict.</span>addFormat
             <span class="apidocSignatureSpan">(name, validate, coerce)</span>
@@ -79,12 +88,221 @@
 
         </li>
 
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.convict.toString">
+            function <span class="apidocSignatureSpan">convict.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.convict.addFormat">module convict.addFormat</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.convict.addFormat.addFormat">
+            function <span class="apidocSignatureSpan">convict.</span>addFormat
+            <span class="apidocSignatureSpan">(name, validate, coerce)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.convict.addFormats">module convict.addFormats</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.convict.addFormats.addFormats">
+            function <span class="apidocSignatureSpan">convict.</span>addFormats
+            <span class="apidocSignatureSpan">(formats)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.convict.toString">module convict.toString</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.convict.toString.toString">
+            function <span class="apidocSignatureSpan">convict.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
     </ol></li>
 
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.convict" id="apidoc.module.convict">module convict</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.convict.convict" id="apidoc.element.convict.convict">
+        function <span class="apidocSignatureSpan"></span>convict
+        <span class="apidocSignatureSpan">(def)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function convict(def) {
+  function walk(obj, path) {
+    if (path) {
+      let ar = path.split(&#x27;.&#x27;);
+      while (ar.length) {
+        let k = ar.shift();
+        if (k in obj) {
+          obj = obj[k];
+        } else {
+          throw new Error(&#x22;cannot find configuration param &#x27;&#x22; + path + &#x22;&#x27;&#x22;);
+        }
+      }
+    }
+
+    return obj;
+  }
+
+  // TODO: Rename this `rv` variable (supposedly &#x22;return value&#x22;) into something
+  // more meaningful.
+  let rv = {
+<span class="apidocCodeCommentSpan">    /**
+     * Exports all the properties (that is the keys and their current values) as JSON
+     */
+</span>    getProperties: function() {
+      return cloneDeep(this._instance);
+    },
+
+    /**
+     * Exports all the properties (that is the keys and their current values) as
+     * a JSON string
+     */
+    toString: function() {
+      return JSON.stringify(this._instance, null, 2);
+    },
+
+    /**
+     * Exports the schema as JSON.
+     */
+    getSchema: function() {
+      return JSON.parse(JSON.stringify(this._schema));
+    },
+
+    /**
+     * Exports the schema as a JSON string
+     */
+    getSchemaString: function() {
+      return JSON.stringify(this._schema, null, 2);
+    },
+
+    /**
+     * @returns the current value of the name property. name can use dot
+     *     notation to reference nested values
+     */
+    get: function(path) {
+      let o = walk(this._instance, path);
+      return typeof o !== &#x27;undefined&#x27; ?
+        cloneDeep(o) :
+        void 0;
+    },
+
+    /**
+     * @returns the default value of the name property. name can use dot
+     *     notation to reference nested values
+     */
+    default: function(path) {
+      // The default value for FOO.BAR.BAZ is stored in `_schema.properties` at:
+      //   FOO.properties.BAR.properties.BAZ.default
+      path = (path.split(&#x27;.&#x27;).join(&#x27;.properties.&#x27;)) + &#x27;.default&#x27;;
+      let o = walk(this._schema.properties, path);
+      return typeof o !== &#x27;undefined&#x27; ?
+        cloneDeep(o) :
+        void 0;
+    },
+
+    /**
+     * Resets a property to its default value as defined in the schema
+     */
+    reset: function(prop_name) {
+      this.set(prop_name, this.default(prop_name));
+    },
+
+    /**
+     * @returns true if the property name is defined, or false otherwise
+     */
+    has: function(path) {
+      try {
+        let r = this.get(path);
+        // values that are set but undefined return false
+        return typeof r !== &#x27;undefined&#x27;;
+      } catch (e) {
+        return false;
+      }
+    },
+
+    /**
+     * Sets the value of name to value. name can use dot notation to reference
+     * nested values, e.g. &#x22;database.port&#x22;. If objects in the chain don&#x27;t yet
+     * exist, they will be initialized to empty objects
+     */
+    set: function(k, v) {
+      v = coerce(k, v, this._schema, this);
+
+      let ar = k.split(&#x27;.&#x27;);
+      let o = this._instance;
+      while (ar.length &#x3e; 1) {
+        k = ar.shift();
+        if (!o[k]) o[k] = {};
+        o = o[k];
+      }
+      o[ar.shift()] = v;
+      return this;
+    },
+
+    /**
+     * Loads and merges a JavaScript object into config
+     */
+    load: function(conf) {
+      overlay(conf, this._instance, this._schema);
+      // environment and arguments always overrides config files
+      importEnvironment(rv);
+      importArguments(rv);
+      return this;
+    },
+
+    /**
+     * Loads and merges one or multiple JSON configuration files into config
+     */
+    loadFile: function(paths) {
+      let self = this;
+      if (!Array.isArray(paths)) paths = [paths];
+      paths.forEach(function(path) {
+        overlay(loadJSON(path), self._instance, self._schema);
+      });
+      // environment and arguments always overrides config files
+      importEnvironment(rv);
+      importArguments(rv);
+      return this;
+    },
+
+    /**
+     * Validates config against the schema used to initialize it
+     */
+    validate: function(options) {
+      options = options || {};
+
+      if (&#x27;strict&#x27; in options) {
+        if(options.strict){
+          options.allowed = ALLOWED_OPTION_STRICT
+          deprecate(&#x27;this syntax is outdated: validate({strict: true}), you must use: validate({allowed: \&#x27;&#x27; + ALLOWED_OPTION_STRI ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 
     <h2>
@@ -158,6 +376,157 @@ Adds new custom formats.
 
 Returns the current value of the `name` property. `name` can use dot notation to reference nested values. E.g.:
 ```javascript
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.convict.toString" id="apidoc.element.convict.toString">
+        function <span class="apidocSignatureSpan">convict.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">toString = function () {
+    return text;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+   throw errors. This is to ensure that the schema and the config files are in
+   sync.
+
+### config.getProperties()
+
+Exports all the properties (that is the keys and their current values) as JSON.
+
+### config.<span class="apidocCodeKeywordSpan">toString</span>()
+
+Exports all the properties (that is the keys and their current values) as a
+JSON string.
+
+### config.getSchema()
+
+Exports the schema as JSON.
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.convict.addFormat" id="apidoc.module.convict.addFormat">module convict.addFormat</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.convict.addFormat.addFormat" id="apidoc.element.convict.addFormat.addFormat">
+        function <span class="apidocSignatureSpan">convict.</span>addFormat
+        <span class="apidocSignatureSpan">(name, validate, coerce)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">addFormat = function (name, validate, coerce) {
+  if (typeof name === &#x27;object&#x27;) {
+    validate = name.validate;
+    coerce = name.coerce;
+    name = name.name;
+  }
+  if (typeof validate !== &#x27;function&#x27;) {
+    throw new Error(&#x27;Validation function for &#x27; + name + &#x27; must be a function.&#x27;);
+  }
+  if (coerce &#x26;&#x26; typeof coerce !== &#x27;function&#x27;) {
+    throw new Error(&#x27;Coerce function for &#x27; + name + &#x27; must be a function.&#x27;);
+  }
+  types[name] = validate;
+  if (coerce) converters[name] = coerce;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    }
+  },
+  default: &#x27;3cec609c9bc601c047af917a544645c50caf8cd606806b4e0a23312441014deb&#x27;
+}
+});
+```
+
+Or, you can use `convict.<span class="apidocCodeKeywordSpan">addFormat</span>()` to register a custom format checking
+method that can be reused for many different properties:
+
+```javascript
+convict.addFormat({
+name: &#x27;float-percent&#x27;,
+validate: function(val) {
+  if (val !== 0 &#x26;&#x26; (!val || val &#x3e; 1 || val &#x3c; 0)) {
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.convict.addFormats" id="apidoc.module.convict.addFormats">module convict.addFormats</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.convict.addFormats.addFormats" id="apidoc.element.convict.addFormats.addFormats">
+        function <span class="apidocSignatureSpan">convict.</span>addFormats
+        <span class="apidocSignatureSpan">(formats)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">addFormats = function (formats) {
+  Object.keys(formats).forEach(function(type) {
+    convict.addFormat(type, formats[type].validate, formats[type].coerce);
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+convict configuration object. The configuration object has an API for getting
+and setting values, described below.
+
+### config.addFormat(format)
+
+Adds a new custom format.
+
+### config.<span class="apidocCodeKeywordSpan">addFormats</span>(format1, format2, ...)
+
+Adds new custom formats.
+
+### config.get(name)
+
+Returns the current value of the `name` property. `name` can use dot notation to reference nested values. E.g.:
+```javascript
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.convict.toString" id="apidoc.module.convict.toString">module convict.toString</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.convict.toString.toString" id="apidoc.element.convict.toString.toString">
+        function <span class="apidocSignatureSpan">convict.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+   throw errors. This is to ensure that the schema and the config files are in
+   sync.
+
+### config.getProperties()
+
+Exports all the properties (that is the keys and their current values) as JSON.
+
+### config.<span class="apidocCodeKeywordSpan">toString</span>()
+
+Exports all the properties (that is the keys and their current values) as a
+JSON string.
+
+### config.getSchema()
+
+Exports the schema as JSON.
 ...</pre></li>
     </ul>
 

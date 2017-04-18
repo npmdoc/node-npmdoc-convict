@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/mozilla/node-convict"
-
-    >convict (v3.0.0)</a>
+    <a href="https://github.com/mozilla/node-convict">convict (v3.0.0)</a>
 </h1>
 <h4>Unruly configuration management for Node.js</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.convict">module convict</a><ol>
 
@@ -154,13 +147,13 @@
     <li>description and source-code<pre class="apidocCodePre">function convict(def) {
   function walk(obj, path) {
     if (path) {
-      let ar = path.split(&#x27;.&#x27;);
+      let ar = path.split('.');
       while (ar.length) {
         let k = ar.shift();
         if (k in obj) {
           obj = obj[k];
         } else {
-          throw new Error(&#x22;cannot find configuration param &#x27;&#x22; + path + &#x22;&#x27;&#x22;);
+          throw new Error("cannot find configuration param '" + path + "'");
         }
       }
     }
@@ -168,7 +161,7 @@
     return obj;
   }
 
-  // TODO: Rename this `rv` variable (supposedly &#x22;return value&#x22;) into something
+  // TODO: Rename this `rv` variable (supposedly "return value") into something
   // more meaningful.
   let rv = {
 <span class="apidocCodeCommentSpan">    /**
@@ -206,7 +199,7 @@
      */
     get: function(path) {
       let o = walk(this._instance, path);
-      return typeof o !== &#x27;undefined&#x27; ?
+      return typeof o !== 'undefined' ?
         cloneDeep(o) :
         void 0;
     },
@@ -218,9 +211,9 @@
     default: function(path) {
       // The default value for FOO.BAR.BAZ is stored in `_schema.properties` at:
       //   FOO.properties.BAR.properties.BAZ.default
-      path = (path.split(&#x27;.&#x27;).join(&#x27;.properties.&#x27;)) + &#x27;.default&#x27;;
+      path = (path.split('.').join('.properties.')) + '.default';
       let o = walk(this._schema.properties, path);
-      return typeof o !== &#x27;undefined&#x27; ?
+      return typeof o !== 'undefined' ?
         cloneDeep(o) :
         void 0;
     },
@@ -239,7 +232,7 @@
       try {
         let r = this.get(path);
         // values that are set but undefined return false
-        return typeof r !== &#x27;undefined&#x27;;
+        return typeof r !== 'undefined';
       } catch (e) {
         return false;
       }
@@ -247,15 +240,15 @@
 
     /**
      * Sets the value of name to value. name can use dot notation to reference
-     * nested values, e.g. &#x22;database.port&#x22;. If objects in the chain don&#x27;t yet
+     * nested values, e.g. "database.port". If objects in the chain don't yet
      * exist, they will be initialized to empty objects
      */
     set: function(k, v) {
       v = coerce(k, v, this._schema, this);
 
-      let ar = k.split(&#x27;.&#x27;);
+      let ar = k.split('.');
       let o = this._instance;
-      while (ar.length &#x3e; 1) {
+      while (ar.length &gt; 1) {
         k = ar.shift();
         if (!o[k]) o[k] = {};
         o = o[k];
@@ -296,10 +289,10 @@
     validate: function(options) {
       options = options || {};
 
-      if (&#x27;strict&#x27; in options) {
+      if ('strict' in options) {
         if(options.strict){
           options.allowed = ALLOWED_OPTION_STRICT
-          deprecate(&#x27;this syntax is outdated: validate({strict: true}), you must use: validate({allowed: \&#x27;&#x27; + ALLOWED_OPTION_STRI ...</pre></li>
+          deprecate('this syntax is outdated: validate({strict: true}), you must use: validate({allowed: \'' + ALLOWED_OPTION_STRI ...</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
 
@@ -313,16 +306,16 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">addFormat = function (name, validate, coerce) {
-  if (typeof name === &#x27;object&#x27;) {
+  if (typeof name === 'object') {
     validate = name.validate;
     coerce = name.coerce;
     name = name.name;
   }
-  if (typeof validate !== &#x27;function&#x27;) {
-    throw new Error(&#x27;Validation function for &#x27; + name + &#x27; must be a function.&#x27;);
+  if (typeof validate !== 'function') {
+    throw new Error('Validation function for ' + name + ' must be a function.');
   }
-  if (coerce &#x26;&#x26; typeof coerce !== &#x27;function&#x27;) {
-    throw new Error(&#x27;Coerce function for &#x27; + name + &#x27; must be a function.&#x27;);
+  if (coerce &amp;&amp; typeof coerce !== 'function') {
+    throw new Error('Coerce function for ' + name + ' must be a function.');
   }
   types[name] = validate;
   if (coerce) converters[name] = coerce;
@@ -330,7 +323,7 @@
     <li>example usage<pre class="apidocCodePre">...
     }
   },
-  default: &#x27;3cec609c9bc601c047af917a544645c50caf8cd606806b4e0a23312441014deb&#x27;
+  default: '3cec609c9bc601c047af917a544645c50caf8cd606806b4e0a23312441014deb'
 }
 });
 ```
@@ -340,9 +333,9 @@ method that can be reused for many different properties:
 
 ```javascript
 convict.addFormat({
-name: &#x27;float-percent&#x27;,
+name: 'float-percent',
 validate: function(val) {
-  if (val !== 0 &#x26;&#x26; (!val || val &#x3e; 1 || val &#x3c; 0)) {
+  if (val !== 0 &amp;&amp; (!val || val &gt; 1 || val &lt; 0)) {
 ...</pre></li>
     </ul>
 
@@ -425,16 +418,16 @@ Exports the schema as JSON.
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">addFormat = function (name, validate, coerce) {
-  if (typeof name === &#x27;object&#x27;) {
+  if (typeof name === 'object') {
     validate = name.validate;
     coerce = name.coerce;
     name = name.name;
   }
-  if (typeof validate !== &#x27;function&#x27;) {
-    throw new Error(&#x27;Validation function for &#x27; + name + &#x27; must be a function.&#x27;);
+  if (typeof validate !== 'function') {
+    throw new Error('Validation function for ' + name + ' must be a function.');
   }
-  if (coerce &#x26;&#x26; typeof coerce !== &#x27;function&#x27;) {
-    throw new Error(&#x27;Coerce function for &#x27; + name + &#x27; must be a function.&#x27;);
+  if (coerce &amp;&amp; typeof coerce !== 'function') {
+    throw new Error('Coerce function for ' + name + ' must be a function.');
   }
   types[name] = validate;
   if (coerce) converters[name] = coerce;
@@ -442,7 +435,7 @@ Exports the schema as JSON.
     <li>example usage<pre class="apidocCodePre">...
     }
   },
-  default: &#x27;3cec609c9bc601c047af917a544645c50caf8cd606806b4e0a23312441014deb&#x27;
+  default: '3cec609c9bc601c047af917a544645c50caf8cd606806b4e0a23312441014deb'
 }
 });
 ```
@@ -452,9 +445,9 @@ method that can be reused for many different properties:
 
 ```javascript
 convict.addFormat({
-name: &#x27;float-percent&#x27;,
+name: 'float-percent',
 validate: function(val) {
-  if (val !== 0 &#x26;&#x26; (!val || val &#x3e; 1 || val &#x3c; 0)) {
+  if (val !== 0 &amp;&amp; (!val || val &gt; 1 || val &lt; 0)) {
 ...</pre></li>
     </ul>
 
@@ -539,3 +532,4 @@ Exports the schema as JSON.
     ]
 </div>
 </div>
+</body></html>
