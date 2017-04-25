@@ -1,6 +1,6 @@
 # npmdoc-convict
 
-#### api documentation for  [convict (v3.0.0)](https://github.com/mozilla/node-convict)  [![npm package](https://img.shields.io/npm/v/npmdoc-convict.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-convict) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-convict.svg)](https://travis-ci.org/npmdoc/node-npmdoc-convict)
+#### basic api documentation for  [convict (v3.0.0)](https://github.com/mozilla/node-convict)  [![npm package](https://img.shields.io/npm/v/npmdoc-convict.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-convict) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-convict.svg)](https://travis-ci.org/npmdoc/node-npmdoc-convict)
 
 #### Unruly configuration management for Node.js
 
@@ -127,7 +127,8 @@
         "test:coverage": "istanbul cover _mocha -- --check-leaks test/*-tests.js",
         "version": "./assert_changelog_ready $npm_package_version"
     },
-    "version": "3.0.0"
+    "version": "3.0.0",
+    "bin": {}
 }
 ```
 
