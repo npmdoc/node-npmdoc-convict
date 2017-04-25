@@ -88,54 +88,6 @@
 
         </li>
 
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.convict.toString">
-            function <span class="apidocSignatureSpan">convict.</span>toString
-            <span class="apidocSignatureSpan">()</span>
-            </a>
-
-        </li>
-
-    </ol></li>
-
-    <li class="apidocModuleLi"><a href="#apidoc.module.convict.addFormat">module convict.addFormat</a><ol>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.convict.addFormat.addFormat">
-            function <span class="apidocSignatureSpan">convict.</span>addFormat
-            <span class="apidocSignatureSpan">(name, validate, coerce)</span>
-            </a>
-
-        </li>
-
-    </ol></li>
-
-    <li class="apidocModuleLi"><a href="#apidoc.module.convict.addFormats">module convict.addFormats</a><ol>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.convict.addFormats.addFormats">
-            function <span class="apidocSignatureSpan">convict.</span>addFormats
-            <span class="apidocSignatureSpan">(formats)</span>
-            </a>
-
-        </li>
-
-    </ol></li>
-
-    <li class="apidocModuleLi"><a href="#apidoc.module.convict.toString">module convict.toString</a><ol>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.convict.toString.toString">
-            function <span class="apidocSignatureSpan">convict.</span>toString
-            <span class="apidocSignatureSpan">()</span>
-            </a>
-
-        </li>
-
     </ol></li>
 
 </ol></div>
@@ -328,21 +280,21 @@
   if (coerce) converters[name] = coerce;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-    }
-  },
-  default: &#x27;3cec609c9bc601c047af917a544645c50caf8cd606806b4e0a23312441014deb&#x27;
-}
-});
-```
+  The rationale in this change is to put logic as less as possible in
+  .travis.yml since it&#x27;s not testable on developers&#x27; system.
+- Merge pull request [#76](https://github.com/mozilla/node-convict/issues/76) from madarche/feat-update_dependencies
+  Update dependencies
+- Merge pull request [#74](https://github.com/mozilla/node-convict/issues/74) from mmerkes/master
+  Fixes [#73](https://github.com/mozilla/node-convict/issues/73), removes validator.check from README.md and adds valid form…
+- Update dependencies
+- Adds convict.<span class="apidocCodeKeywordSpan">addFormat</span>() to validation section of README and tidies up section
+- Fixes [#73](https://github.com/mozilla/node-convict/issues/73), removes validator.check from README.md and adds valid format checker
 
-Or, you can use `convict.<span class="apidocCodeKeywordSpan">addFormat</span>()` to register a custom format checking
-method that can be reused for many different properties:
+## [0.8.0] - 2015-05-31
 
-```javascript
-convict.addFormat({
-name: &#x27;float-percent&#x27;,
-validate: function(val) {
-  if (val !== 0 &#x26;&#x26; (!val || val &#x3e; 1 || val &#x3c; 0)) {
+- Merge pull request [#64](https://github.com/mozilla/node-convict/issues/64) from umar-muneer/master
+  Strict Validation Mode Added
+- Merge pull request [#72](https://github.com/mozilla/node-convict/issues/72) from pdehaan/patch-2
 ...</pre></li>
     </ul>
 
@@ -376,157 +328,6 @@ Adds new custom formats.
 
 Returns the current value of the `name` property. `name` can use dot notation to reference nested values. E.g.:
 ```javascript
-...</pre></li>
-    </ul>
-
-
-
-    <h2>
-        <a href="#apidoc.element.convict.toString" id="apidoc.element.convict.toString">
-        function <span class="apidocSignatureSpan">convict.</span>toString
-        <span class="apidocSignatureSpan">()</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">toString = function () {
-    return text;
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">...
-   throw errors. This is to ensure that the schema and the config files are in
-   sync.
-
-### config.getProperties()
-
-Exports all the properties (that is the keys and their current values) as JSON.
-
-### config.<span class="apidocCodeKeywordSpan">toString</span>()
-
-Exports all the properties (that is the keys and their current values) as a
-JSON string.
-
-### config.getSchema()
-
-Exports the schema as JSON.
-...</pre></li>
-    </ul>
-
-
-</div>
-
-<div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.convict.addFormat" id="apidoc.module.convict.addFormat">module convict.addFormat</a></h1>
-
-
-    <h2>
-        <a href="#apidoc.element.convict.addFormat.addFormat" id="apidoc.element.convict.addFormat.addFormat">
-        function <span class="apidocSignatureSpan">convict.</span>addFormat
-        <span class="apidocSignatureSpan">(name, validate, coerce)</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">addFormat = function (name, validate, coerce) {
-  if (typeof name === &#x27;object&#x27;) {
-    validate = name.validate;
-    coerce = name.coerce;
-    name = name.name;
-  }
-  if (typeof validate !== &#x27;function&#x27;) {
-    throw new Error(&#x27;Validation function for &#x27; + name + &#x27; must be a function.&#x27;);
-  }
-  if (coerce &#x26;&#x26; typeof coerce !== &#x27;function&#x27;) {
-    throw new Error(&#x27;Coerce function for &#x27; + name + &#x27; must be a function.&#x27;);
-  }
-  types[name] = validate;
-  if (coerce) converters[name] = coerce;
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">...
-    }
-  },
-  default: &#x27;3cec609c9bc601c047af917a544645c50caf8cd606806b4e0a23312441014deb&#x27;
-}
-});
-```
-
-Or, you can use `convict.<span class="apidocCodeKeywordSpan">addFormat</span>()` to register a custom format checking
-method that can be reused for many different properties:
-
-```javascript
-convict.addFormat({
-name: &#x27;float-percent&#x27;,
-validate: function(val) {
-  if (val !== 0 &#x26;&#x26; (!val || val &#x3e; 1 || val &#x3c; 0)) {
-...</pre></li>
-    </ul>
-
-
-</div>
-
-<div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.convict.addFormats" id="apidoc.module.convict.addFormats">module convict.addFormats</a></h1>
-
-
-    <h2>
-        <a href="#apidoc.element.convict.addFormats.addFormats" id="apidoc.element.convict.addFormats.addFormats">
-        function <span class="apidocSignatureSpan">convict.</span>addFormats
-        <span class="apidocSignatureSpan">(formats)</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">addFormats = function (formats) {
-  Object.keys(formats).forEach(function(type) {
-    convict.addFormat(type, formats[type].validate, formats[type].coerce);
-  });
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">...
-convict configuration object. The configuration object has an API for getting
-and setting values, described below.
-
-### config.addFormat(format)
-
-Adds a new custom format.
-
-### config.<span class="apidocCodeKeywordSpan">addFormats</span>(format1, format2, ...)
-
-Adds new custom formats.
-
-### config.get(name)
-
-Returns the current value of the `name` property. `name` can use dot notation to reference nested values. E.g.:
-```javascript
-...</pre></li>
-    </ul>
-
-
-</div>
-
-<div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.convict.toString" id="apidoc.module.convict.toString">module convict.toString</a></h1>
-
-
-    <h2>
-        <a href="#apidoc.element.convict.toString.toString" id="apidoc.element.convict.toString.toString">
-        function <span class="apidocSignatureSpan">convict.</span>toString
-        <span class="apidocSignatureSpan">()</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
-    <li>example usage<pre class="apidocCodePre">...
-   throw errors. This is to ensure that the schema and the config files are in
-   sync.
-
-### config.getProperties()
-
-Exports all the properties (that is the keys and their current values) as JSON.
-
-### config.<span class="apidocCodeKeywordSpan">toString</span>()
-
-Exports all the properties (that is the keys and their current values) as a
-JSON string.
-
-### config.getSchema()
-
-Exports the schema as JSON.
 ...</pre></li>
     </ul>
 
